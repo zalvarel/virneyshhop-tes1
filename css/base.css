@@ -1,0 +1,249 @@
+/* ==========================================================================
+   VIRNEY STORE — base.css
+   Dipakai di SEMUA halaman. Berisi:
+     1. Design tokens (warna, font, ukuran)
+     2. Reset & base
+     3. Komponen: .facet, .btn, .tag, .chip, .card, .art, .sec-head
+     4. Layout bersama: navbar (.nav) & footer
+   Aturan desain lengkap ada di DESIGN.md.
+   ========================================================================== */
+
+
+/* 1. DESIGN TOKENS -------------------------------------------------------- */
+:root {
+  /* Warna — diambil dari logo kristal emerald & maskot penguin */
+  --bg:         #06140D;   /* latar halaman (hitam-hijau, punggung penguin) */
+  --surface:    #0A2117;   /* isi kartu */
+  --surface-2:  #0E2C1F;   /* isi kartu saat hover / input aktif */
+  --line:       #174B37;   /* border 1px semua komponen */
+  --emerald:    #147A5A;   /* tombol utama, chip aktif */
+  --emerald-2:  #1E9C74;   /* hover tombol utama, border saat hover */
+  --gem:        #5FE0B4;   /* aksen kilau: ikon, link, titik aktif */
+  --gold:       #D6A84E;   /* aksen kedua: harga, promo, judul footer */
+  --gold-soft:  rgba(214, 168, 78, .14);  /* latar label promo */
+  --text:       #EAF4EE;   /* teks utama */
+  --muted:      #93AE9F;   /* teks sekunder */
+
+  /* Font */
+  --font-display: "Chakra Petch", "Plus Jakarta Sans", sans-serif;      /* judul */
+  --font-body:    "Plus Jakarta Sans", system-ui, sans-serif;           /* teks biasa */
+
+  /* Bentuk & layout */
+  --cut:    12px;                       /* potongan sudut default (facet) */
+  --max:    1200px;                     /* lebar maksimum konten */
+  --gutter: clamp(16px, 4vw, 40px);     /* padding kiri-kanan halaman */
+}
+
+
+/* 2. RESET & BASE --------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
+img, svg { display: block; }
+:focus-visible { outline: 2px solid var(--gem); outline-offset: 3px; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+}
+
+
+/* 3. KOMPONEN ------------------------------------------------------------- */
+
+/* .facet — kotak bersudut potong (kiri-atas & kanan-bawah) dengan border 1px.
+   Ini bentuk dasar SEMUA kartu/kotak. Atur ukuran potongan pakai --c,
+   atur warna isi pakai --fill. Contoh: <div class="facet" style="--c:16px"> */
+.facet {
+  --c: var(--cut);
+  --clip: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                  calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  position: relative;
+  isolation: isolate;
+  background: var(--line);          /* warna ini yang tampak sebagai border */
+  clip-path: var(--clip);
+  transition: background .15s;
+}
+.facet::before {                    /* lapisan isi, 1px lebih kecil = efek border */
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background: var(--fill, var(--surface));
+  clip-path: var(--clip);
+}
+a.facet:hover, button.facet:hover { background: var(--emerald-2); }
+a.facet:hover::before { --fill: var(--surface-2); }
+
+/* .btn — tombol bersudut potong.
+   Varian: .btn-primary (emerald), .btn-gold (promo), .btn-ghost.facet (garis) */
+.btn {
+  --c: 9px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 42px; padding: 0 20px;
+  font-weight: 600; font-size: 14px; white-space: nowrap;
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                     calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+  transition: background .15s;
+}
+.btn svg { width: 18px; height: 18px; }
+.btn-primary { background: var(--emerald); }
+.btn-primary:hover { background: var(--emerald-2); }
+.btn-gold { background: var(--gold); color: #1A1205; }
+.btn-gold:hover { background: #E4B95E; }
+.btn-ghost { --fill: var(--bg); }   /* WAJIB dipasang bersama .facet */
+
+/* .tag — label kecil emas (promo, status) */
+.tag {
+  --c: 7px;
+  display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+  padding: 6px 12px;
+  font-size: 12.5px; font-weight: 600;
+  background: var(--gold-soft); color: var(--gold);
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)),
+                     calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+.tag svg { width: 14px; height: 14px; }
+
+/* .chip — tombol filter/tab. Pakai bersama .facet. Aktif = aria-selected="true" */
+.chip {
+  --c: 8px;
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+  height: 40px; padding: 0 16px;
+  font-size: 14px; font-weight: 500; color: var(--muted); white-space: nowrap;
+}
+.chip svg { width: 16px; height: 16px; }
+.chip:hover { color: var(--text); }
+.chip[aria-selected="true"] { background: var(--emerald-2); color: var(--text); --fill: var(--emerald); }
+
+/* .diamond — penanda belah ketupat (pengganti bullet/dot) */
+.diamond { width: 10px; height: 10px; transform: rotate(45deg); background: var(--gold); flex-shrink: 0; }
+
+/* .sec-head — judul section: belah ketupat emas + judul + deskripsi */
+.sec-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.sec-head h2 {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 28px); font-weight: 700; line-height: 1.15;
+}
+.sec-head h2::before { content: ""; width: 10px; height: 10px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+.sec-head p { color: var(--muted); font-size: 14px; margin-top: 4px; padding-left: 22px; }
+.section { padding-top: 48px; }
+
+.link { color: var(--gem); font-weight: 600; font-size: 14px; white-space: nowrap; }
+.link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* .art — gambar game. Selama belum ada gambar, tampil inisial + warna (--c1, --c2).
+   Kalau ada <img> di dalamnya, gambar menutupi placeholder. */
+.art { position: relative; overflow: hidden; background: var(--c1); display: grid; place-items: center; }
+.art::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(80% 60% at 20% 15%, rgba(255,255,255,.2), transparent 60%),
+              linear-gradient(160deg, transparent 40%, rgba(0,0,0,.45));
+}
+.art::after {
+  content: ""; position: absolute; width: 62%; aspect-ratio: 1; right: -20%; bottom: -20%;
+  transform: rotate(45deg); border: 1px solid rgba(255,255,255,.3); background: var(--c2);
+}
+.art span { position: relative; z-index: 1; font-family: var(--font-display); font-weight: 700; color: rgba(255,255,255,.95); text-shadow: 0 2px 12px rgba(0,0,0,.3); }
+.art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
+
+/* .card — kartu game di grid (pakai bersama .facet) */
+.card { display: block; --c: 14px; }
+.card .art { aspect-ratio: 1; margin: 1px 1px 0; }
+.card .art span { font-size: clamp(26px, 3vw, 38px); }
+.card:hover .art { filter: brightness(1.08); }
+.card-body { padding: 10px 12px 12px; }
+.card-body b, .card-body small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-body b { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.card-body small { color: var(--muted); font-size: 12.5px; }
+
+/* Grid kartu game — 6 / 4 / 3 / 2 kolom */
+.grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+
+
+/* 4. LAYOUT BERSAMA ------------------------------------------------------- */
+
+/* Navbar */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(6,20,13,.95); border-bottom: 1px solid var(--line); }
+.nav-inner { display: flex; align-items: center; gap: 20px; height: 70px; }
+.brand { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.brand img { height: 44px; width: auto; }
+.brand span { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: .02em; line-height: 1; }
+
+.search { --c: 9px; flex: 1; max-width: 420px; position: relative; }
+.search input { width: 100%; height: 42px; border: 0; background: transparent; color: var(--text); padding: 0 16px 0 42px; font: inherit; font-size: 14px; outline: none; }
+.search input::placeholder { color: var(--muted); }
+.search:focus-within { background: var(--emerald-2); }
+.search svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--muted); }
+
+.nav-links { display: flex; gap: 2px; margin-left: auto; }
+.nav-links a { position: relative; padding: 8px 14px; font-size: 14px; font-weight: 500; color: var(--muted); }
+.nav-links a:hover, .nav-links a[aria-current] { color: var(--text); }
+.nav-links a[aria-current]::after {   /* penanda halaman aktif: belah ketupat */
+  content: ""; position: absolute; left: 50%; bottom: -2px; width: 7px; height: 7px;
+  background: var(--gem); transform: translateX(-50%) rotate(45deg);
+}
+.nav-auth { display: flex; gap: 8px; }
+.menu-btn { --c: 8px; display: none; width: 42px; height: 42px; place-items: center; margin-left: auto; }
+.menu-btn svg { width: 20px; height: 20px; }
+.mobile-search { display: none; padding-bottom: 12px; }
+.mobile-menu { display: none; border-top: 1px solid var(--line); padding: 8px var(--gutter) 18px; }
+.mobile-menu a:not(.btn) { display: block; padding: 13px 2px; border-bottom: 1px solid var(--line); font-weight: 500; }
+.mobile-menu .nav-auth { margin-top: 14px; }
+.mobile-menu .nav-auth .btn { flex: 1; }
+.nav.open .mobile-menu { display: block; }
+
+/* Footer */
+footer { margin-top: 72px; border-top: 1px solid var(--line); background: #040F09; }
+.foot { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; padding: 44px 0 32px; }
+.foot-logo { width: 230px; height: auto; }
+.foot p { color: var(--muted); font-size: 14px; max-width: 34ch; margin-top: 14px; }
+.foot h3 { font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--gold); }
+.foot ul { list-style: none; display: grid; gap: 8px; }
+.foot li a { color: var(--muted); font-size: 14px; }
+.foot li a:hover { color: var(--text); }
+.socials { display: flex; gap: 8px; margin-top: 16px; }
+.socials a { --c: 8px; width: 40px; height: 40px; display: grid; place-items: center; }
+.socials svg { width: 17px; height: 17px; }
+.copy { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); padding: 18px 0; color: var(--muted); font-size: 13px; }
+
+/* Tombol Chat CS melayang */
+.cs { position: fixed; right: 20px; bottom: 20px; z-index: 60; height: 50px; padding: 0 20px; }
+
+
+/* RESPONSIVE (bersama) ---------------------------------------------------- */
+@media (max-width: 1024px) {   /* tablet */
+  .nav-links { display: none; }
+  .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .foot { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {    /* HP */
+  .nav-inner { height: 62px; gap: 12px; }
+  .nav-inner .search, .nav-inner .nav-auth { display: none; }
+  .brand img { height: 38px; }
+  .menu-btn { display: grid; }
+  .mobile-search { display: block; }
+  .mobile-search .search { max-width: none; }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .card { --c: 10px; }
+  .card-body { padding: 8px 10px 10px; }
+  .card-body b { font-size: 13px; }
+  .foot { gap: 28px; }
+  .foot > div:first-child { grid-column: 1 / -1; }
+  .cs { padding: 0; width: 52px; }
+  .cs span { display: none; }
+}
+@media (max-width: 380px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

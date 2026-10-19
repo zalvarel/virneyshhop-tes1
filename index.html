@@ -1,0 +1,188 @@
+<!doctype html>
+<!--
+  VIRNEY STORE — Beranda (index.html)
+  Urutan section: NAVBAR → HERO (maskot + promo) → TRUST → POPULER → KATALOG → FOOTER → tombol Chat CS
+  Aturan desain: lihat DESIGN.md. Navbar & footer harus disalin persis ke halaman lain.
+-->
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virney Store — Top Up Game Murah & Instan</title>
+<meta name="description" content="Top up diamond Mobile Legends, Free Fire, PUBG Mobile, Valorant, dan game lainnya. Proses otomatis, bayar pakai QRIS, e-wallet, atau transfer bank.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<!-- base.css = token & komponen bersama (semua halaman), home.css = khusus beranda -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Virney Store, ke beranda">
+        <img src="assets/logo-emblem.png" alt="" width="237" height="256">
+        <span>VIRNEY STORE</span>
+      </a>
+      <form class="search facet" role="search" onsubmit="event.preventDefault()">
+        <label for="q" class="sr-only">Cari game</label>
+        <i data-lucide="search"></i>
+        <input id="q" type="search" placeholder="Cari game, contoh: Mobile Legends" autocomplete="off">
+      </form>
+      <nav class="nav-links" aria-label="Menu utama">
+        <a href="index.html" aria-current="page">Beranda</a>
+        <a href="cek-transaksi.html">Cek Transaksi</a>
+        <a href="games.html">Daftar Harga</a>
+      </nav>
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-ghost facet">Masuk</a>
+        <a href="register.html" class="btn btn-primary">Daftar</a>
+      </div>
+      <button class="menu-btn facet" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileMenu"><i data-lucide="menu"></i></button>
+    </div>
+    <div class="mobile-search">
+      <form class="search facet" role="search" onsubmit="event.preventDefault()">
+        <label for="q2" class="sr-only">Cari game</label>
+        <i data-lucide="search"></i>
+        <input id="q2" type="search" placeholder="Cari game..." autocomplete="off">
+      </form>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Beranda</a>
+    <a href="cek-transaksi.html">Cek Transaksi</a>
+    <a href="games.html">Daftar Harga</a>
+    <div class="nav-auth">
+      <a href="login.html" class="btn btn-ghost facet">Masuk</a>
+      <a href="register.html" class="btn btn-primary">Daftar</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO: maskot + promo bergilir ============ -->
+  <div class="hero">
+    <div class="wrap">
+      <div class="stage facet" id="slider" aria-roledescription="carousel" aria-label="Promo Virney Store">
+        <div class="halo" aria-hidden="true"></div>
+        <i class="shard" aria-hidden="true" style="width:34px;height:34px;right:44%;top:16%"></i>
+        <i class="shard" aria-hidden="true" style="width:20px;height:20px;right:6%;top:22%"></i>
+        <i class="shard" aria-hidden="true" style="width:26px;height:26px;right:40%;bottom:18%;opacity:.6"></i>
+        <img class="mascot" src="assets/mascot-penguin.webp" alt="Maskot Virney Store, penguin bermahkota kristal emerald memegang tongkat" width="897" height="900">
+
+        <div class="slides">
+          <article class="slide active" aria-roledescription="slide" aria-label="1 dari 3">
+            <span class="tag"><i data-lucide="crown"></i>Promo minggu ini</span>
+            <h1>Diamond Mobile Legends masuk dalam hitungan detik</h1>
+            <p>Masukkan User ID dan Zone ID, bayar, lalu diamond langsung terkirim ke akunmu.</p>
+            <div class="slide-cta">
+              <a href="topup.html?game=mobile-legends" class="btn btn-primary">Top up sekarang</a>
+              <span class="price-flag"><strong>−10%</strong>semua nominal</span>
+            </div>
+          </article>
+          <article class="slide" aria-roledescription="slide" aria-label="2 dari 3">
+            <span class="tag"><i data-lucide="flame"></i>Flash sale 20.00–22.00</span>
+            <h2>Free Fire 140 Diamond harga flash sale</h2>
+            <p>Kuota terbatas tiap malam. Harga kembali normal setelah stok promo habis.</p>
+            <div class="slide-cta">
+              <a href="topup.html?game=free-fire" class="btn btn-gold">Lihat flash sale</a>
+              <span class="price-flag"><strong>Rp17rb</strong>per 140 DM</span>
+            </div>
+          </article>
+          <article class="slide" aria-roledescription="slide" aria-label="3 dari 3">
+            <span class="tag"><i data-lucide="qr-code"></i>Bayar pakai QRIS</span>
+            <h2>Satu QR untuk semua e-wallet dan m-banking</h2>
+            <p>Scan pakai DANA, GoPay, OVO, ShopeePay, atau aplikasi bank favoritmu.</p>
+            <div class="slide-cta">
+              <a href="games.html" class="btn btn-primary">Pilih game</a>
+              <span class="price-flag"><strong>Rp0</strong>biaya admin</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="dots" id="dots"></div>
+        <div class="arrows">
+          <button class="arrow facet" id="prev" aria-label="Promo sebelumnya"><i data-lucide="chevron-left"></i></button>
+          <button class="arrow facet" id="next" aria-label="Promo berikutnya"><i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="trust">
+        <div class="facet"><i data-lucide="timer"></i><span><b>Proses otomatis</b><small>Rata-rata di bawah 1 menit</small></span></div>
+        <div class="facet"><i data-lucide="shield-check"></i><span><b>Pembayaran aman</b><small>Diproses lewat Midtrans</small></span></div>
+        <div class="facet"><i data-lucide="gem"></i><span><b>Harga bersaing</b><small>Langsung dari supplier resmi</small></span></div>
+        <div class="facet"><i data-lucide="headset"></i><span><b>CS 24 jam</b><small>Balas cepat via WhatsApp</small></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ POPULER ============ -->
+  <section class="section" aria-labelledby="pop-h">
+    <div class="wrap">
+      <div class="sec-head"><div><h2 id="pop-h">Populer sekarang</h2><p>Game yang paling sering di-top up minggu ini.</p></div></div>
+      <div class="popular" id="popular"></div>
+    </div>
+  </section>
+
+  <!-- ============ KATALOG ============ -->
+  <section class="section" aria-labelledby="cat-h" id="katalog">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2 id="cat-h">Semua produk</h2><p>Pilih game atau layanan yang mau kamu isi.</p></div>
+        <a href="games.html" class="link">Lihat semua</a>
+      </div>
+      <div class="chips" role="tablist" aria-label="Kategori produk" id="chips">
+        <button class="chip facet" role="tab" aria-selected="true" data-cat="game"><i data-lucide="gamepad-2"></i>Top up game</button>
+        <button class="chip facet" role="tab" aria-selected="false" data-cat="voucher"><i data-lucide="ticket"></i>Voucher</button>
+        <button class="chip facet" role="tab" aria-selected="false" data-cat="pulsa"><i data-lucide="smartphone"></i>Pulsa & data</button>
+        <button class="chip facet" role="tab" aria-selected="false" data-cat="hiburan"><i data-lucide="tv"></i>Hiburan</button>
+      </div>
+      <div class="grid" id="grid" role="tabpanel" aria-live="polite"></div>
+      <div class="more"><a href="games.html" class="btn btn-ghost facet">Tampilkan lebih banyak</a></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="index.html" aria-label="Virney Store, ke beranda"><img class="foot-logo" src="assets/logo-virney-store.webp" alt="Virney Store" width="900" height="360"></a>
+        <p>Tempat top up game dan voucher digital dengan proses otomatis dan harga bersahabat.</p>
+        <div class="socials">
+          <a href="#" class="facet" aria-label="Instagram Virney Store"><i data-lucide="instagram"></i></a>
+          <a href="#" class="facet" aria-label="TikTok Virney Store"><i data-lucide="music-2"></i></a>
+          <a href="#" class="facet" aria-label="Email Virney Store"><i data-lucide="mail"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3>Peta situs</h3>
+        <ul><li><a href="index.html">Beranda</a></li><li><a href="games.html">Daftar harga</a></li><li><a href="cek-transaksi.html">Cek transaksi</a></li><li><a href="login.html">Masuk</a></li><li><a href="register.html">Daftar</a></li></ul>
+      </div>
+      <div>
+        <h3>Bantuan</h3>
+        <ul><li><a href="#">WhatsApp CS</a></li><li><a href="#">Email</a></li><li><a href="#">Pertanyaan umum</a></li></ul>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <ul><li><a href="#">Kebijakan privasi</a></li><li><a href="#">Syarat & ketentuan</a></li></ul>
+      </div>
+    </div>
+    <div class="copy"><span>© 2026 Virney Store. Hak cipta dilindungi.</span><span>Dibuat di Bandung</span></div>
+  </div>
+</footer>
+
+<a href="#" class="btn btn-primary cs" aria-label="Chat CS lewat WhatsApp"><i data-lucide="message-circle"></i><span>Chat CS</span></a>
+
+<!-- data.js = data dummy produk, home.js = logika beranda, nav.js = navbar & ikon (semua halaman, dimuat terakhir) -->
+<script src="js/data.js"></script>
+<script src="js/home.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>
